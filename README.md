@@ -5,7 +5,7 @@ This program uses sorting algorithms to save student grades into files.
 
 | `input and array management`    |               |  Jullian       |
 | ------------------ | ------------- | ------------ |
-| `days:int`         | takes input for the number of days on the trip | returns days as integer |
+| `days:int`         | Handle input of student names and grades, store data in arrays, validate user inputs (e.g., check for valid grade ranges). |
 ***
 | `get_trip_times`   |               |  Jullian      |
 | ------------------ | ------------- | ------------ |
@@ -23,14 +23,3 @@ This program uses sorting algorithms to save student grades into files.
 | `parking:double`    | takes input for daily parking fees | returns total parking costs exceeding $6/day |
 | `taxi:double`       | takes input for daily taxi fees | returns total taxi costs exceeding $10/day |
 ***
-| `get_lodging`      |               |  Jadon      |
-| ------------------ | ------------- | ------------ |
-| `hotel:double`      | takes input for hotel expenses | returns total lodging costs exceeding $90/night |
-***
-| `get_meal_costs`   |               |  Jadon    |
-| ------------------ | ------------- | ------------ |
-| `meals:dict`       | takes input for each allowable meal cost based on departure and arrival times | returns total meal expenses exceeding allowance |
-***
-| `calculate_total`  |               |  Jadon       |
-| ------------------ | ------------- | ------------ |
-| `expenses:double`   | calculates total expenses and total allowable | returns excess cost and savings
