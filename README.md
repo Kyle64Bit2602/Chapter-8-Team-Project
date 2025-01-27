@@ -5,20 +5,20 @@ This program uses sorting algorithms to save student grades into files.
 
 | `input and array management`    |               |  Jullian       |
 | ------------------ | ------------- | ------------ |
-| `days:int`         | Handle input of student names and grades, store data in arrays, validate user inputs (e.g., check for valid grade ranges). |
+| `Responsibility Breakdown`         | Handle input of student names and grades, store data in arrays, validate user inputs (e.g., check for valid grade ranges). |
 ***
-| `get_trip_times`   |               |  Kyle      |
+| `file i/o handling`   |               |  Kyle      |
 | ------------------ | ------------- | ------------ |
-| `departure:int`   | takes input for departure time on the first day  | returns time in 24-hour format |
+| `Responsibility Breakdown`   | Write functions to save and load data to/from files. Ensure file handling robustness (e.g., error handling for invalid file paths). |
 | `arrival:int`     | takes input for arrival time on the last day  | returns time in 24-hour format |
 ***
-| `get_expenses`     |               |  Cole    |
+| `analysis and search algorithms`     |               |  Cole    |
 | ------------------ | ------------- | ------------ |
 | `airfare:double`    | takes input for airfare amount  | returns airfare amount |
 | `car_rental:double` | takes input for car rental amount | returns car rental amount |
 | `miles:int`        | takes input for miles driven (if private vehicle used) | returns total vehicle expense at $0.27/mile |
 ***
-| `get_fees`         |               |  Cade       |
+| `sorting and integration`         |               |  Kade       |
 | ------------------ | ------------- | ------------ |
 | `parking:double`    | takes input for daily parking fees | returns total parking costs exceeding $6/day |
 | `taxi:double`       | takes input for daily taxi fees | returns total taxi costs exceeding $10/day |
