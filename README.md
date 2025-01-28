@@ -10,8 +10,8 @@ This program uses sorting algorithms to save student grades into files.
 | `file i/o handling`   |               |  Kyle      |
 | ------------------ | ------------- | ------------ |
 | `Responsibility Breakdown`   | Write functions to save and load data to/from files. |
-|     |  Ensure file handling robustness (e.g., error handling for invalid file paths).  
-***| 
+|     |  Ensure file handling robustness (e.g., error handling for invalid file paths).  |
+***
 | `analysis and search algorithms`     |               |  Cole    |
 | ------------------ | ------------- | ------------ |
 | `Responsibility Breakdown` | takes input for airfare amount  | returns airfare amount |
