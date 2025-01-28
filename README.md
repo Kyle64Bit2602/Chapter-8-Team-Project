@@ -20,7 +20,8 @@ This program uses sorting algorithms to save student grades into files.
 ***
 | `sorting and integration`         |               |  Kade       |
 | ------------------ | ------------- | ------------ |
-| `parking:double`    | Implement merge sort for sorting by average grades. Implement quick sort for sorting names alphabetically. Integrate all components and ensure smooth data flow. Design the user interface.
- |
-| `taxi:double`       | takes input for daily taxi fees | returns total taxi costs exceeding $10/day |
+| `Responsibility Breakdown`    | Implement merge sort for sorting by average grades.  |
+| ``       | Implement quick sort for sorting names alphabetically. |
+| ``       | Integrate all components and ensure smooth data flow. |
+| ``       |  Design the user interface. |
 ***
