@@ -14,9 +14,9 @@ This program uses sorting algorithms to save student grades into files.
 ***
 | `analysis and search algorithms`     |               |  Cole    |
 | ------------------ | ------------- | ------------ |
-| `Responsibility Breakdown` | takes input for airfare amount  | returns airfare amount |
-|  | takes input for car rental amount | returns car rental amount |
-|         | takes input for miles driven (if private vehicle used) | returns total vehicle expense at $0.27/mile |
+| `Responsibility Breakdown` | takes input for airfare amount  |  |
+|  | takes input for car rental amount | |
+|         | takes input for miles driven (if private vehicle used) |  |
 ***
 | `sorting and integration`         |               |  Kade       |
 | ------------------ | ------------- | ------------ |
