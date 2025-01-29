@@ -31,7 +31,6 @@ int main()
 
 void binary_search()
 {
-
 }
 
 void load_file()
@@ -81,16 +80,6 @@ void save_to_file(array[])
 
 void input_grades()
 {
-	string student;
-	int grade;
-	int grades[5];
-	cout << "Enter a student's name: ";
-	getline(cin, student);
-	for (int n = 0; n > 5; n++)
-	{
-
-	}
-
 }
 
 void view_grades()
@@ -100,22 +89,18 @@ void view_grades()
 
 void student_data()
 {
-
 }
 
 void data_analysis()
 {
-
 }
 
 void quick_sort()
 {
-
 }
 
 void merge_sort()
 {
-
 }
 
 
