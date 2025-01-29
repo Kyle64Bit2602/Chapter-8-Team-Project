@@ -12,12 +12,13 @@ void input_grades();
 void view_grades();
 void student_data();
 void data_analysis();
-void quick_sort();
+void quickSort(int arr[], int lowIndex, int highIndex)
 void merge_sort();
 void binary_search();
 void load_file();
 void save_to_file(array[]);
 int menu();
+int partition(int arr[], int lowIndex, int highIndex)
 
 /*
 ################
@@ -108,9 +109,15 @@ void data_analysis()
 
 }
 
-void quick_sort()
+void quickSort(int arr[], int lowIndex, int highIndex)
 {
+	if (lowIndex < highIndex) {
+		// Find the partition index
+		int partitionIndex = partition(arr, lowIndex, highIndex);
 
+		// Recursively sort elements before and after the partition
+		quickSort(arr, lowIndex, partitionIndex - 1);
+		quickSort(arr, partitionIndex + 1, highIndex);
 }
 
 void merge_sort()
@@ -118,6 +125,19 @@ void merge_sort()
 
 }
 
+int partition(int arr[], int lowIndex, int highIndex) //Splits data into two for quicksort
+{
+	int pivotElement = arr[highIndex]; // Choosing the last element as the pivot
+	int smallerElementIndex = lowIndex - 1; // Keeps track of the correct position for the pivot
+
+	for (int currentIndex = lowIndex; currentIndex < highIndex; currentIndex++) {
+		// If the current element is smaller than the pivot, swap it to the left partition
+		if (arr[currentIndex] < pivotElement) {
+			smallerElementIndex++;
+			swap(arr[smallerElementIndex], arr[currentIndex]);
+		}
+	}
+}
 
 int menu()
 {
