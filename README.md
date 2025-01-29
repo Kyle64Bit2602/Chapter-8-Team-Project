@@ -14,8 +14,8 @@ This program uses sorting algorithms to save student grades into files.
 ***
 | `analysis and search algorithms`     |               |  Cole    |
 | ------------------ | ------------- | ------------ |
-| `Responsibility Breakdown` | takes input for airfare amount  |  |
-|  | takes input for car rental amount | |
+| `Responsibility Breakdown` | Develop functions for data analysis, including average calculation and extreme value identification.  |  |
+|Implement the binary search algorithm to locate students by name. | 
 |         | takes input for miles driven (if private vehicle used) |  |
 ***
 | `sorting and integration`         |               |  Kade       |
