@@ -80,6 +80,18 @@ void save_to_file(array[])
 
 void input_grades()
 {
+	//initiates variables
+	string student;
+	int grade;
+	int grades[4];
+	cout << "Enter a student's name: "; //gets a 
+	getline(cin, student);
+	for (int n = 0; n > 5, n++)
+	{
+		cout << "Grade " << n << ":";
+		cout << grades[n];
+	}
+	
 }
 
 void view_grades()
