@@ -19,6 +19,9 @@ void load_file();
 void save_to_file(array[]);
 int menu();
 int partition(int arr[], int lowIndex, int highIndex)
+void data_analysis(string students[], int* grades[], int student_count, int grade_counts[]);
+int binary_search(string students[], int student_count, string target);
+double calculate_average(int grades[], int grade_count);
 
 /*
 ################
@@ -32,7 +35,6 @@ int main()
 
 void binary_search()
 {
-
 }
 
 void load_file()
@@ -82,16 +84,18 @@ void save_to_file(array[])
 
 void input_grades()
 {
+	//initiates variables
 	string student;
 	int grade;
-	int grades[5];
-	cout << "Enter a student's name: ";
+	int grades[4];
+	cout << "Enter a student's name: "; //gets a 
 	getline(cin, student);
-	for (int n = 0; n > 5; n++)
+	for (int n = 0; n > 5, n++)
 	{
-
+		cout << "Grade " << n << ":";
+		cout << grades[n];
 	}
-
+	
 }
 
 void view_grades()
@@ -101,17 +105,16 @@ void view_grades()
 
 void student_data()
 {
-
 }
 
 void data_analysis()
 {
-
 }
 
 void quickSort(int arr[], int lowIndex, int highIndex)
 {
-	if (lowIndex < highIndex) {
+	if (lowIndex < highIndex) 
+	{
 		// Find the partition index
 		int partitionIndex = partition(arr, lowIndex, highIndex);
 
@@ -122,7 +125,6 @@ void quickSort(int arr[], int lowIndex, int highIndex)
 
 void merge_sort()
 {
-
 }
 
 int partition(int arr[], int lowIndex, int highIndex) //Splits data into two for quicksort
@@ -167,4 +169,49 @@ int menu()
 		else
 			check == true
 	}
+// Function to analyze data: calculate averages, find min and max
+void data_analysis(string students[], int* grades[], int student_count, int grade_counts[]) {
+    if (student_count == 0) {
+        cout << "No data available.\n";
+        return;
+    }
+
+    double highest_avg = 0, lowest_avg = 100;
+    string top_student, bottom_student;
+    
+    for (int i = 0; i < student_count; i++) {
+        double avg = calculate_average(grades[i], grade_counts[i]);
+        if (avg > highest_avg) {
+            highest_avg = avg;
+            top_student = students[i];
+        }
+        if (avg < lowest_avg) {
+            lowest_avg = avg;
+            bottom_student = students[i];
+        }
+    }
+    
+    cout << "Top: " << top_student << " (" << highest_avg << "%)\n";
+    cout << "Lowest: " << bottom_student << " (" << lowest_avg << "%)\n";
+}
+
+// Binary search to find a student
+int binary_search(string students[], int student_count, string target) {
+    int left = 0, right = student_count - 1;
+    while (left <= right) {
+        int mid = (left + right) / 2;
+        if (students[mid] == target) return mid;
+        else if (students[mid] < target) left = mid + 1;
+        else right = mid - 1;
+    }
+    return -1;
+}
+
+// Calculate average grade
+double calculate_average(int grades[], int grade_count) {
+    if (grade_count == 0) return 0.0;
+    int sum = 0;
+    for (int i = 0; i < grade_count; i++) sum += grades[i];
+    return sum / (double)grade_count;
+}
 }
