@@ -11,10 +11,8 @@ using namespace std;
 void input_grades();
 void view_grades();
 void student_data();
-void data_analysis();
 void quickSort(int arr[], int lowIndex, int highIndex)
 void merge_sort();
-void binary_search();
 void load_file();
 void save_to_file(array[]);
 int menu();
@@ -31,10 +29,6 @@ double calculate_average(int grades[], int grade_count);
 int main()
 {
 	
-}
-
-void binary_search()
-{
 }
 
 void load_file()
@@ -98,22 +92,23 @@ void input_grades()
 	
 }
 
-void view_grades()
+void view_grades(arr[])
 {
-
+	int size = sizeof(arr) / sizeof(arr[0]); // Calculate array size
+	for (int index = 0; index < size; index++)
+	{
+		cout << arr[index] << endl;
+	}
 }
 
 void student_data()
 {
-}
 
-void data_analysis()
-{
 }
 
 void quickSort(int arr[], int lowIndex, int highIndex)
 {
-	if (lowIndex < highIndex) 
+	if (lowIndex < highIndex)
 	{
 		// Find the partition index
 		int partitionIndex = partition(arr, lowIndex, highIndex);
@@ -121,10 +116,12 @@ void quickSort(int arr[], int lowIndex, int highIndex)
 		// Recursively sort elements before and after the partition
 		quickSort(arr, lowIndex, partitionIndex - 1);
 		quickSort(arr, partitionIndex + 1, highIndex);
+	}
 }
 
 void merge_sort()
 {
+
 }
 
 int partition(int arr[], int lowIndex, int highIndex) //Splits data into two for quicksort
@@ -169,6 +166,7 @@ int menu()
 		else
 			check == true
 	}
+
 // Function to analyze data: calculate averages, find min and max
 void data_analysis(string students[], int* grades[], int student_count, int grade_counts[]) {
     if (student_count == 0) {
