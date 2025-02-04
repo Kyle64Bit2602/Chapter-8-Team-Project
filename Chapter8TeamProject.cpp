@@ -5,6 +5,7 @@
 #include <string>
 #include <iomanip>
 #include <fstream>
+#include <vector>
 using namespace std;
 
 //Function Prototypes (arguments, type of functions to be updated)
@@ -12,7 +13,7 @@ void input_grades();
 void student_data();
 void quickSort(int arr[], int lowIndex, int highIndex)
 void view_grades(int grades[], string students[])
-void merge_sort();
+void merge_sort(int arr[], int left, int right);
 void load_file();
 void save_to_file(array[]);
 int menu();
@@ -20,6 +21,9 @@ int partition(int arr[], int lowIndex, int highIndex)
 void data_analysis(string students[], int* grades[], int student_count, int grade_counts[]);
 int binary_search(string students[], int student_count, string target);
 double calculate_average(int grades[], int grade_count);
+void parseStringArray(const string& line, vector<string>& stringArray);
+void parseIntArray(const string& line, vector<int>& intArray)
+void merge(int arr[], int left, int mid, int right);
 
 /*
 ################
@@ -75,8 +79,10 @@ int menu()
 	}
 	return choice
 }
-void load_file()
+int load_file()
 {
+	int grades[];
+	string students[];
 	string filename;
 	cout << "Please enter the file location you wish to load into the program.\n";
 	cout << "(Add another \ to each location.\n)";
@@ -86,14 +92,24 @@ void load_file()
 
 	ifstream file(filename);
 	
+	string line;
+	vector<int> intArray;
+	vector<string> stringArray;
 	if (!file)
 	{
-		cout << "Error: File was not found.\n"
+		cout << "Error: File was not found.\n";
+		return 1;
 	}
 	else
 	{
-		//Placeholder
-		//Loads file into data in array format
+		if (getline(filename, line))
+			parseIntArray(line, intArray);
+			for (size_t i = 0; i < intArray.size(); i++) 
+				grades[i] = intArray[i]
+		if (getline(filename, line))
+			parseStringArray(line, stringArray);
+			for (size_t i = 0; i < stringArray.size(); i++)
+				students[i] = stringArray[i]
 	}
 }
 
@@ -114,7 +130,8 @@ void save_to_file(int grades[], string students[])
 	}
 	else
 	{
-		for (int index = 0, index < size; index++)
+		filename << grades[];
+		filename << students[];
 	}
 
 }
@@ -154,10 +171,9 @@ pair <int[], string[]> input_grades()
 
 void view_grades(int grades[], string students[])
 {
-	int size = sizeof(arr) / sizeof(arr[0]); // Calculate array size
 	for (int index = 0; index < size; index++)
 	{
-		cout << students[index] << \t\t\t << arr[index] << endl;
+		cout << students[index] << \t\t\t << grades[index] << endl;
 	}
 }
 
@@ -179,9 +195,14 @@ void quickSort(int arr[], int lowIndex, int highIndex)
 	}
 }
 
-void merge_sort()
+void merge_sort(int arr[], int left, int right) 
 {
-
+	if (left < right) {
+		int mid = left + (right - left) / 2;
+		merge_sort(arr, left, mid);
+		merge_sort(arr, mid + 1, right);
+		merge(arr, left, mid, right);
+	}
 }
 
 int partition(int arr[], int lowIndex, int highIndex) //Splits data into two for quicksort
@@ -243,4 +264,64 @@ double calculate_average(int grades[], int grade_count) {
     for (int i = 0; i < grade_count; i++) sum += grades[i];
     return sum / (double)grade_count;
 }
+
+void parseIntArray(const string& line, vector<int>& intArray)
+{
+	istringstream iss(line);
+	int num;
+	while (iss >> num) {
+		intArray.push_back(num);
+	}
+}
+
+void parseStringArray(const string& line, vector<string>& stringArray)
+{
+	istringstream iss(line);
+	string word;
+	while (iss >> word) {
+		intArray.push_back(word);
+	}
+}
+
+// Function to merge two sorted subarrays
+void merge(int arr[], int left, int mid, int right) {
+	int leftSize = mid - left + 1;  // Size of left subarray
+	int rightSize = right - mid;    // Size of right subarray
+
+	int leftArray[leftSize], rightArray[rightSize];
+
+	// Copy elements into left and right temporary subarrays
+	for (int index = 0; index < leftSize; index++)
+		leftArray[index] = arr[left + index];
+	for (int index = 0; index < rightSize; index++)
+		rightArray[index] = arr[mid + 1 + index];
+
+	// Merging the two sorted subarrays back into the main array
+	int leftIndex = 0, rightIndex = 0, mergeIndex = left;
+
+	while (leftIndex < leftSize && rightIndex < rightSize) {
+		if (leftArray[leftIndex] <= rightArray[rightIndex]) {
+			arr[mergeIndex] = leftArray[leftIndex];
+			leftIndex++;
+		}
+		else {
+			arr[mergeIndex] = rightArray[rightIndex];
+			rightIndex++;
+		}
+		mergeIndex++;
+	}
+
+	// Copy remaining elements of leftArray, if any
+	while (leftIndex < leftSize) {
+		arr[mergeIndex] = leftArray[leftIndex];
+		leftIndex++;
+		mergeIndex++;
+	}
+
+	// Copy remaining elements of rightArray, if any
+	while (rightIndex < rightSize) {
+		arr[mergeIndex] = rightArray[rightIndex];
+		rightIndex++;
+		mergeIndex++;
+	}
 }
