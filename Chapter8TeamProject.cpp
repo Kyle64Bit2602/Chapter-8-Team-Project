@@ -45,8 +45,35 @@ int main()
 		}
 		else if (choice == 2)
 		{
-			view_grades(int grades[], string students[])
+			view_grades(int grades[], string students[]);
 		}
+		else if (choice == 3)
+		{
+			save_to_file(int grades[], string students[]);
+		}
+		else if (choice == 4)
+		{
+			load_file();
+		}
+		else if (choice == 5)
+		{
+			student_data(int grades[], string students[]);
+
+		}
+		else if (choice == 6)
+		{
+			data_analysis(string students[], int* grades[], int student_count, int grade_counts[]);
+		}
+		else if (choice == 7)
+		{
+			student_data(int grades[], string students[]);
+		}
+		else
+		{
+			check == False;
+			cout << "Thank you for using the Student Grades Management System.\n";
+		}
+
 	
 	}
 }
@@ -177,10 +204,40 @@ void view_grades(int grades[], string students[])
 	}
 }
 
-void student_data()
-{
+void student_data(int grades[][10], string students[], int student_count, int grade_counts[]) {
+	int choice;
+	cout << "Sort students by:\n";
+	cout << "1. Name\n";
+	cout << "2. Average Grade\n";
+	cout << "Enter choice: ";
+	cin >> choice;
 
+	if (choice == 1) {
+		// Sorting by Name using Merge Sort
+		merge_sort(students, 0, student_count - 1);
+	}
+	else if (choice == 2) {
+		// Create an array of averages
+		vector<pair<double, string>> avgGrades;
+		for (int i = 0; i < student_count; i++) {
+			double avg = calculate_average(grades[i], grade_counts[i]);
+			avgGrades.push_back({ avg, students[i] });
+		}
+
+		// Sorting by Average using Quick Sort
+		quickSort(avgGrades, 0, student_count - 1);
+
+		// Display sorted students by average
+		cout << "Sorted by Average Grade:\n";
+		for (auto& entry : avgGrades) {
+			cout << entry.second << " - " << entry.first << "%\n";
+		}
+	}
+	else {
+		cout << "Invalid choice. Returning to menu.\n";
+	}
 }
+
 
 void quickSort(int arr[], int lowIndex, int highIndex)
 {
