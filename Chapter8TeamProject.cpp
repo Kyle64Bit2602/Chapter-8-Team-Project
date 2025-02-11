@@ -1,29 +1,27 @@
-//Chapter 8 Team Project
-//Kyle, Kade, Cole, Jullian
-
 #include <iostream>
 #include <string>
-#include <iomanip>
-#include <fstream>
 #include <vector>
+#include <algorithm> // For std::sort
+#include <numeric>   // For std::accumulate
+#include <fstream>
+#include <sstream>
 using namespace std;
 
-//Function Prototypes (arguments, type of functions to be updated)
-void input_grades();
-void student_data();
-void quickSort(int arr[], int lowIndex, int highIndex)
-void view_grades(int grades[], string students[])
-void merge_sort(int arr[], int left, int right);
-void load_file();
-void save_to_file(array[]);
+// Function Prototypes
+void input_grades(vector<string>& students, vector<vector<int>>& grades);
+void view_grades(const vector<string>& students, const vector<vector<int>>& grades);
+void student_data(vector<string>& students, vector<vector<int>>& grades);
+void data_analysis(const vector<string>& students, const vector<vector<int>>& grades);
+void save_to_file(const vector<string>& students, const vector<vector<int>>& grades);
+void load_file(vector<string>& students, vector<vector<int>>& grades);
 int menu();
-int partition(int arr[], int lowIndex, int highIndex)
-void data_analysis(string students[], int* grades[], int student_count, int grade_counts[]);
-int binary_search(string students[], int student_count, string target);
-double calculate_average(int grades[], int grade_count);
-void parseStringArray(const string& line, vector<string>& stringArray);
-void parseIntArray(const string& line, vector<int>& intArray)
-void merge(int arr[], int left, int mid, int right);
+
+// Helper functions
+double calculate_average(const vector<int>& grades);
+void quickSort(vector<pair<double, string>>& arr, int low, int high);
+int partition(vector<pair<double, string>>& arr, int low, int high);
+void mergeSort(vector<string>& students, vector<vector<int>>& grades, int left, int right);
+void merge(vector<string>& students, vector<vector<int>>& grades, int left, int mid, int right);
 
 /*
 ################
@@ -32,353 +30,345 @@ void merge(int arr[], int left, int mid, int right);
 */
 int main()
 {
-	char cont;
-	bool check = True;
-	while (check == True)
-	{
-		choice = menu();
-		if (choice == 1)
-		{
-			pair<int[], string[]> gradesStudents = input_grades();
-			int grades[] = gradesStudents.first;
-			string students[] = gradesStudents.second;
-		}
-		else if (choice == 2)
-		{
-			view_grades(int grades[], string students[]);
-		}
-		else if (choice == 3)
-		{
-			save_to_file(int grades[], string students[]);
-		}
-		else if (choice == 4)
-		{
-			load_file();
-		}
-		else if (choice == 5)
-		{
-			student_data(int grades[], string students[]);
+    vector<string> students;
+    vector<vector<int>> grades;
+    bool running = true;
 
-		}
-		else if (choice == 6)
-		{
-			data_analysis(string students[], int* grades[], int student_count, int grade_counts[]);
-		}
-		else if (choice == 7)
-		{
-			student_data(int grades[], string students[]);
-		}
-		else
-		{
-			check == False;
-			cout << "Thank you for using the Student Grades Management System.\n";
-		}
-
-	
-	}
+    while (running)
+    {
+        int choice = menu();
+        switch (choice)
+        {
+        case 1:
+            input_grades(students, grades);
+            break;
+        case 2:
+            view_grades(students, grades);
+            break;
+        case 3:
+            save_to_file(students, grades);
+            break;
+        case 4:
+            load_file(students, grades);
+            break;
+        case 5:
+            data_analysis(students, grades);
+            break;
+        case 6:
+            student_data(students, grades);
+            break;
+        case 7:
+            running = false;
+            cout << "Thank you for using the Student Grades Management System.\n";
+            break;
+        default:
+            cout << "Invalid choice. Please try again.\n";
+            break;
+        }
+    }
+    return 0;
 }
+
+// Menu function
 int menu()
 {
-	int choice = 0;
-	bool check = false;
-
-	cout << "Student Grades Management System\n";
-	cout << "1. Input Grades\n";
-	cout << "2. View Grades\n";
-	cout << "3. Save Grades to File\n";
-	cout << "4. Load Grades from File\n";
-	cout << "5. Analyze Grades\n";
-	cout << "6. Search for a Student by Name\n";
-	cout << "7. Sort Data\n";
-	cout << "8. Exit\n";
-	cout << "\n\nEnter your choice:";
-	cin >> choice;
-	while (check == false)
-	{
-		if (choice < 1 || choice > 8)
-		{
-			cout << "Error: Input does not fall between 1-8.\n";
-			cout << "Enter your choice: ";
-			cin >> choice;
-		}
-		else
-			check == true
-	}
-	return choice
+    int choice;
+    cout << "\nStudent Grades Management System\n";
+    cout << "1. Input Grades\n";
+    cout << "2. View Grades\n";
+    cout << "3. Save Grades to File\n";
+    cout << "4. Load Grades from File\n";
+    cout << "5. Analyze Grades\n";
+    cout << "6. Sort Data\n";
+    cout << "7. Exit\n";
+    cout << "Enter your choice: ";
+    cin >> choice;
+    return choice;
 }
-int load_file()
+
+// Input grades function
+void input_grades(vector<string>& students, vector<vector<int>>& grades)
 {
-	int grades[];
-	string students[];
-	string filename;
-	cout << "Please enter the file location you wish to load into the program.\n";
-	cout << "(Add another \ to each location.\n)";
-	cout << "(Ex: C:\\Users\\BillyBob\\Desktop\\Chapter-8-Team-Project)\n";
-	cout << ">>: ";
-	cin >> filename;
+    string student;
+    char cont;
 
-	ifstream file(filename);
-	
-	string line;
-	vector<int> intArray;
-	vector<string> stringArray;
-	if (!file)
-	{
-		cout << "Error: File was not found.\n";
-		return 1;
-	}
-	else
-	{
-		if (getline(filename, line))
-			parseIntArray(line, intArray);
-			for (size_t i = 0; i < intArray.size(); i++) 
-				grades[i] = intArray[i]
-		if (getline(filename, line))
-			parseStringArray(line, stringArray);
-			for (size_t i = 0; i < stringArray.size(); i++)
-				students[i] = stringArray[i]
-	}
+    do
+    {
+        cout << "Enter a student's name: ";
+        cin.ignore(); // Clear the input buffer
+        getline(cin, student);
+        students.push_back(student);
+
+        vector<int> studentGrades;
+        int grade;
+        int numGrades;
+        cout << "How many grades do you want to input for " << student << "? ";
+        cin >> numGrades;
+
+        for (int i = 0; i < numGrades; i++)
+        {
+            cout << "Enter grade " << i + 1 << ": ";
+            cin >> grade;
+            studentGrades.push_back(grade);
+        }
+        grades.push_back(studentGrades);
+
+        cout << "Would you like to add another student? (y/n): ";
+        cin >> cont;
+    } while (cont == 'y' || cont == 'Y');
 }
 
-void save_to_file(int grades[], string students[])
+// View grades function
+void view_grades(const vector<string>& students, const vector<vector<int>>& grades)
 {
-	string filename;
-	cout << "Please enter the file location you wish to save to.\n";
-	cout << "(Add another \ to each location.\n)";
-	cout << "(Ex: C:\\Users\\BillyBob\\Desktop\\Chapter-8-Team-Project)\n";
-	cout << ">>: ";
-	cin >> filename;
-
-	ofstream file(filename);
-
-	if (!file)
-	{
-		cout << "Error: File was not found.\n"
-	}
-	else
-	{
-		filename << grades[];
-		filename << students[];
-	}
-
-}
-
-pair <int[], string[]> input_grades()
-{
-	//initiates variables
-	bool check = True;
-	char cont;
-	string student;
-	string students[];
-	int grade;
-	int grades[];
-	while (check == True)
-	{
-		cout << "Enter a student's name: ";
-		getline(cin, student);
-		int num;
-		cout << "How many grades do you want to input?\n";
-		cin >> num;
-		for (int n = 0; n = num; n++)
-		{
-			cout << "Grade " << n << ":";
-			cin >> n;
-			cout << grades[n];
-		}
-		cout << "Grades successfully added.\n";
-		cout << "Would you like to add another student to the registry? (y/n)";
-		cin >> cont;
-		if (cont != 'y' || cont != 'Y')
-		{
-			check = False;
-		}
-	}
-	return {grades[], students[])
-}
-
-void view_grades(int grades[], string students[])
-{
-	for (int index = 0; index < size; index++)
-	{
-		cout << students[index] << \t\t\t << grades[index] << endl;
-	}
-}
-
-void student_data(int grades[][10], string students[], int student_count, int grade_counts[]) {
-	int choice;
-	cout << "Sort students by:\n";
-	cout << "1. Name\n";
-	cout << "2. Average Grade\n";
-	cout << "Enter choice: ";
-	cin >> choice;
-
-	if (choice == 1) {
-		// Sorting by Name using Merge Sort
-		merge_sort(students, 0, student_count - 1);
-	}
-	else if (choice == 2) {
-		// Create an array of averages
-		vector<pair<double, string>> avgGrades;
-		for (int i = 0; i < student_count; i++) {
-			double avg = calculate_average(grades[i], grade_counts[i]);
-			avgGrades.push_back({ avg, students[i] });
-		}
-
-		// Sorting by Average using Quick Sort
-		quickSort(avgGrades, 0, student_count - 1);
-
-		// Display sorted students by average
-		cout << "Sorted by Average Grade:\n";
-		for (auto& entry : avgGrades) {
-			cout << entry.second << " - " << entry.first << "%\n";
-		}
-	}
-	else {
-		cout << "Invalid choice. Returning to menu.\n";
-	}
-}
-
-
-void quickSort(int arr[], int lowIndex, int highIndex)
-{
-	if (lowIndex < highIndex)
-	{
-		// Find the partition index
-		int partitionIndex = partition(arr, lowIndex, highIndex);
-
-		// Recursively sort elements before and after the partition
-		quickSort(arr, lowIndex, partitionIndex - 1);
-		quickSort(arr, partitionIndex + 1, highIndex);
-	}
-}
-
-void merge_sort(int arr[], int left, int right) 
-{
-	if (left < right) {
-		int mid = left + (right - left) / 2;
-		merge_sort(arr, left, mid);
-		merge_sort(arr, mid + 1, right);
-		merge(arr, left, mid, right);
-	}
-}
-
-int partition(int arr[], int lowIndex, int highIndex) //Splits data into two for quicksort
-{
-	int pivotElement = arr[highIndex]; // Choosing the last element as the pivot
-	int smallerElementIndex = lowIndex - 1; // Keeps track of the correct position for the pivot
-
-	for (int currentIndex = lowIndex; currentIndex < highIndex; currentIndex++) {
-		// If the current element is smaller than the pivot, swap it to the left partition
-		if (arr[currentIndex] < pivotElement) {
-			smallerElementIndex++;
-			swap(arr[smallerElementIndex], arr[currentIndex]);
-		}
-	}
-}
-
-// Function to analyze data: calculate averages, find min and max
-void data_analysis(string students[], int* grades[], int student_count, int grade_counts[]) {
-    if (student_count == 0) {
-        cout << "No data available.\n";
+    if (students.empty())
+    {
+        cout << "No student data available.\n";
         return;
     }
 
-    double highest_avg = 0, lowest_avg = 100;
-    string top_student, bottom_student;
-    
-    for (int i = 0; i < student_count; i++) {
-        double avg = calculate_average(grades[i], grade_counts[i]);
-        if (avg > highest_avg) {
-            highest_avg = avg;
-            top_student = students[i];
+    for (size_t i = 0; i < students.size(); i++)
+    {
+        cout << "Student: " << students[i] << "\tGrades: ";
+        for (int grade : grades[i])
+        {
+            cout << grade << " ";
         }
-        if (avg < lowest_avg) {
-            lowest_avg = avg;
-            bottom_student = students[i];
-        }
+        cout << endl;
     }
-    
-    cout << "Top: " << top_student << " (" << highest_avg << "%)\n";
-    cout << "Lowest: " << bottom_student << " (" << lowest_avg << "%)\n";
 }
 
-// Binary search to find a student
-int binary_search(string students[], int student_count, string target) {
-    int left = 0, right = student_count - 1;
-    while (left <= right) {
-        int mid = (left + right) / 2;
-        if (students[mid] == target) return mid;
-        else if (students[mid] < target) left = mid + 1;
-        else right = mid - 1;
+// Student data function (sort by name or average grade)
+void student_data(vector<string>& students, vector<vector<int>>& grades)
+{
+    int choice;
+    cout << "Sort students by:\n";
+    cout << "1. Name\n";
+    cout << "2. Average Grade\n";
+    cout << "Enter your choice: ";
+    cin >> choice;
+
+    if (choice == 1)
+    {
+        // Sort by name using Merge Sort
+        mergeSort(students, grades, 0, students.size() - 1);
+        cout << "Students sorted by name:\n";
+        view_grades(students, grades);
     }
-    return -1;
+    else if (choice == 2)
+    {
+        // Sort by average grade using QuickSort
+        vector<pair<double, string>> avgGrades;
+        for (size_t i = 0; i < students.size(); i++)
+        {
+            double avg = calculate_average(grades[i]);
+            avgGrades.push_back({ avg, students[i] });
+        }
+
+        quickSort(avgGrades, 0, avgGrades.size() - 1);
+
+        cout << "Students sorted by average grade:\n";
+        for (const auto& entry : avgGrades)
+        {
+            cout << "Student: " << entry.second << "\tAverage Grade: " << entry.first << endl;
+        }
+    }
+    else
+    {
+        cout << "Invalid choice.\n";
+    }
+}
+
+// Data analysis function
+void data_analysis(const vector<string>& students, const vector<vector<int>>& grades)
+{
+    if (students.empty())
+    {
+        cout << "No data available for analysis.\n";
+        return;
+    }
+
+    double highestAvg = 0, lowestAvg = 100;
+    string topStudent, bottomStudent;
+
+    for (size_t i = 0; i < students.size(); i++)
+    {
+        double avg = calculate_average(grades[i]);
+        if (avg > highestAvg)
+        {
+            highestAvg = avg;
+            topStudent = students[i];
+        }
+        if (avg < lowestAvg)
+        {
+            lowestAvg = avg;
+            bottomStudent = students[i];
+        }
+    }
+
+    cout << "Top Student: " << topStudent << " (Average: " << highestAvg << ")\n";
+    cout << "Lowest Student: " << bottomStudent << " (Average: " << lowestAvg << ")\n";
 }
 
 // Calculate average grade
-double calculate_average(int grades[], int grade_count) {
-    if (grade_count == 0) return 0.0;
-    int sum = 0;
-    for (int i = 0; i < grade_count; i++) sum += grades[i];
-    return sum / (double)grade_count;
-}
-
-void parseIntArray(const string& line, vector<int>& intArray)
+double calculate_average(const vector<int>& grades)
 {
-	istringstream iss(line);
-	int num;
-	while (iss >> num) {
-		intArray.push_back(num);
-	}
+    if (grades.empty()) return 0.0;
+    int sum = accumulate(grades.begin(), grades.end(), 0);
+    return static_cast<double>(sum) / grades.size();
 }
 
-void parseStringArray(const string& line, vector<string>& stringArray)
+// QuickSort for sorting by average grade
+void quickSort(vector<pair<double, string>>& arr, int low, int high)
 {
-	istringstream iss(line);
-	string word;
-	while (iss >> word) {
-		intArray.push_back(word);
-	}
+    if (low < high)
+    {
+        int pi = partition(arr, low, high);
+        quickSort(arr, low, pi - 1);
+        quickSort(arr, pi + 1, high);
+    }
 }
 
-// Function to merge two sorted subarrays
-void merge(int arr[], int left, int mid, int right) {
-	int leftSize = mid - left + 1;  // Size of left subarray
-	int rightSize = right - mid;    // Size of right subarray
+int partition(vector<pair<double, string>>& arr, int low, int high)
+{
+    double pivot = arr[high].first;
+    int i = low - 1;
 
-	int leftArray[leftSize], rightArray[rightSize];
+    for (int j = low; j < high; j++)
+    {
+        if (arr[j].first < pivot)
+        {
+            i++;
+            swap(arr[i], arr[j]);
+        }
+    }
+    swap(arr[i + 1], arr[high]);
+    return i + 1;
+}
 
-	// Copy elements into left and right temporary subarrays
-	for (int index = 0; index < leftSize; index++)
-		leftArray[index] = arr[left + index];
-	for (int index = 0; index < rightSize; index++)
-		rightArray[index] = arr[mid + 1 + index];
+// Merge Sort for sorting by name
+void mergeSort(vector<string>& students, vector<vector<int>>& grades, int left, int right)
+{
+    if (left < right)
+    {
+        int mid = left + (right - left) / 2;
+        mergeSort(students, grades, left, mid);
+        mergeSort(students, grades, mid + 1, right);
+        merge(students, grades, left, mid, right);
+    }
+}
 
-	// Merging the two sorted subarrays back into the main array
-	int leftIndex = 0, rightIndex = 0, mergeIndex = left;
+void merge(vector<string>& students, vector<vector<int>>& grades, int left, int mid, int right)
+{
+    int n1 = mid - left + 1;
+    int n2 = right - mid;
 
-	while (leftIndex < leftSize && rightIndex < rightSize) {
-		if (leftArray[leftIndex] <= rightArray[rightIndex]) {
-			arr[mergeIndex] = leftArray[leftIndex];
-			leftIndex++;
-		}
-		else {
-			arr[mergeIndex] = rightArray[rightIndex];
-			rightIndex++;
-		}
-		mergeIndex++;
-	}
+    vector<string> leftStudents(n1), rightStudents(n2);
+    vector<vector<int>> leftGrades(n1), rightGrades(n2);
 
-	// Copy remaining elements of leftArray, if any
-	while (leftIndex < leftSize) {
-		arr[mergeIndex] = leftArray[leftIndex];
-		leftIndex++;
-		mergeIndex++;
-	}
+    for (int i = 0; i < n1; i++)
+    {
+        leftStudents[i] = students[left + i];
+        leftGrades[i] = grades[left + i];
+    }
+    for (int i = 0; i < n2; i++)
+    {
+        rightStudents[i] = students[mid + 1 + i];
+        rightGrades[i] = grades[mid + 1 + i];
+    }
 
-	// Copy remaining elements of rightArray, if any
-	while (rightIndex < rightSize) {
-		arr[mergeIndex] = rightArray[rightIndex];
-		rightIndex++;
-		mergeIndex++;
-	}
+    int i = 0, j = 0, k = left;
+    while (i < n1 && j < n2)
+    {
+        if (leftStudents[i] <= rightStudents[j])
+        {
+            students[k] = leftStudents[i];
+            grades[k] = leftGrades[i];
+            i++;
+        }
+        else
+        {
+            students[k] = rightStudents[j];
+            grades[k] = rightGrades[j];
+            j++;
+        }
+        k++;
+    }
+
+    while (i < n1)
+    {
+        students[k] = leftStudents[i];
+        grades[k] = leftGrades[i];
+        i++;
+        k++;
+    }
+
+    while (j < n2)
+    {
+        students[k] = rightStudents[j];
+        grades[k] = rightGrades[j];
+        j++;
+        k++;
+    }
+}
+
+// Save to file function
+void save_to_file(const vector<string>& students, const vector<vector<int>>& grades)
+{
+    string filename;
+    cout << "Enter the file name to save: ";
+    cin >> filename;
+
+    ofstream file(filename);
+    if (!file)
+    {
+        cout << "Error opening file.\n";
+        return;
+    }
+
+    for (size_t i = 0; i < students.size(); i++)
+    {
+        file << students[i] << " ";
+        for (int grade : grades[i])
+        {
+            file << grade << " ";
+        }
+        file << "\n";
+    }
+    cout << "Data saved to file.\n";
+}
+
+// Load from file function
+void load_file(vector<string>& students, vector<vector<int>>& grades)
+{
+    string filename;
+    cout << "Enter the file name to load: ";
+    cin >> filename;
+
+    ifstream file(filename);
+    if (!file)
+    {
+        cout << "Error opening file.\n";
+        return;
+    }
+
+    students.clear();
+    grades.clear();
+    string line;
+    while (getline(file, line))
+    {
+        stringstream ss(line);
+        string name;
+        ss >> name;
+        students.push_back(name);
+
+        vector<int> studentGrades;
+        int grade;
+        while (ss >> grade)
+        {
+            studentGrades.push_back(grade);
+        }
+        grades.push_back(studentGrades);
+    }
+    cout << "Data loaded from file.\n";
 }
